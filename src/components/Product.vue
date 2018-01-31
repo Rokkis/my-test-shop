@@ -2,7 +2,8 @@
 
 <div class="container">
   <div class = "main">
-      <button @click = "showModal = true">Добавить товар</button>
+    <a class="btn-floating btn-large waves-effect waves-light red" @click = "showModal = true"><i class="material-icons">add</i></a>
+      
     
     <transition name="modal">
         <div v-if = "showModal" class="modal-mask">
@@ -92,12 +93,18 @@ export default {
     input{
         margin-bottom: 10px;
     }
+    .btn-floating{
+      
+      margin: 50px auto;
+      display: block;
+    }
     button{
       width: 200px;
       margin: 0 auto;
       display: block;
     }
     .product-item{
+      
       display: inline-block;
       width:200px;
       height:200px;
@@ -123,10 +130,11 @@ export default {
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+  
 }
 
 .modal-container {
-  width: 300px;
+  width: 500px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
