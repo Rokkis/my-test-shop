@@ -52,8 +52,27 @@
     </div>
     </transition>
 
-    <div class = "product-item" v-for = "product in products"><img :src="product.photo" alt=""></div>
     
+    
+     <div class="row" v-for = "product in products">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img class = "img" :src="product.photo">
+          
+        
+        </div> 
+        <div class="card-content">
+          <span class="card-title">{{product.name}}</span>
+          <p>{{product.name.length}}</p>
+        
+          <p>Производитель:{{product.manufacturer}}</p>
+          <p>Гарантия:{{product.guarantee}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   </div>
   </div>
 </template>
@@ -70,14 +89,18 @@ export default {
             image: '',
             showModal: false,
             products:[],
+            seen:false,
         }
     },
     methods:{
      add(){
       this.showModal = false;
-      this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto});
-      console.log(this.products);
-     }
+      
+      this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto,seen:false});
+      
+     
+     },
+     
     }
 }
 </script>
@@ -103,6 +126,22 @@ export default {
       margin: 0 auto;
       display: block;
     }
+    .row{
+      display: inline-block;
+    }
+    .card{
+      width:200px;
+     
+    }
+   .img{
+     height:300px;
+   }
+   .row{
+     
+     
+     
+     word-wrap:break-word;
+   }
     .product-item{
       
       display: inline-block;
