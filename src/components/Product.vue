@@ -22,15 +22,15 @@
             <slot name="body">
                <form action="">
           <label> <p>Название товара</p>
-              <input type="text" v-model="productName">
+              <input type="text" v-model="productName" maxlength="23">
               </label>
 
                <label><p>Производитель</p>
-              <input type="text" v-model = "productManufacturer">
+              <input type="text" v-model = "productManufacturer" maxlength="30">
               </label>
 
                <label> <p>Гарантия(мес)</p>
-              <input type="text" v-model = "productGuarantee">
+              <input type="text" v-model = "productGuarantee" maxlength="10">
               </label>
 
              <p>Загрузить фото товара</p>
@@ -69,10 +69,10 @@
           
         
         
-          <p>Производитель:</p>
+          <p style="font-weight: bold">Производитель:</p>
           <p>{{product.manufacturer}}</p>
-          <p>Гарантия:</p>
-          <p>{{product.guarantee}}</p>
+          <p style="font-weight: bold">Гарантия:</p>
+          <p >{{product.guarantee}}</p>
         </div>
       </div>
     </div>
@@ -103,7 +103,7 @@ export default {
 
       this.showModal = false;
       
-      this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto,SmallSize:false});
+      this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto});
      if(this.products[this.products.length-1].name.length > 10){
        this.products[this.products.length-1].SmallSize = true;
        
@@ -159,9 +159,7 @@ export default {
      height:300px;
    }
   
-   .smallSize{
-     font-size: 15px;
-   }
+   
     .product-item{
       
       display: inline-block;
