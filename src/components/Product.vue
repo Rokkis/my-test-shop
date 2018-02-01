@@ -2,8 +2,10 @@
 
 <div class="container">
   <div class = "main">
-    <a class="btn-floating btn-large waves-effect waves-light red" @click = "showModal = true"><i class="material-icons">add</i></a>
-      
+    <div :class = "{center:isActiv,top:notIsActiv}" >
+      <h1>Товаров:{{products.length}}</h1>
+      <a class="btn-floating btn-large waves-effect waves-light red" @click = "showModal = true"><i class="material-icons">add</i></a>
+    </div>
     
     <transition name="modal">
         <div v-if = "showModal" class="modal-mask">
@@ -63,11 +65,14 @@
         
         </div> 
         <div class="card-content">
-          <span class="card-title">{{product.name}}</span>
+          <h3 class="card-title">{{product.name}}</h3>
           
         
-          <p>Производитель:{{product.manufacturer}}</p>
-          <p>Гарантия:{{product.guarantee}}</p>
+        
+          <p>Производитель:</p>
+          <p>{{product.manufacturer}}</p>
+          <p>Гарантия:</p>
+          <p>{{product.guarantee}}</p>
         </div>
       </div>
     </div>
@@ -81,7 +86,8 @@
 export default {
     data(){
         return{
-           
+           isActiv:true,
+           notIsActiv:false,
             productName:"",
             productManufacturer:"",
             productGuarantee:"",
@@ -98,8 +104,11 @@ export default {
       
       this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto,seen:false});
       
-     
+     this.notIsActiv = true;
+     this.isActiv=false;
      },
+
+    
      
     }
 }
@@ -116,10 +125,18 @@ export default {
     input{
         margin-bottom: 10px;
     }
-    .btn-floating{
+    .top{
       
       margin: 50px auto;
       display: block;
+    }
+    .center{
+      margin:40%;
+     
+    }
+
+    .center a{
+      margin-left:45%;
     }
     button{
       width: 200px;
@@ -130,9 +147,10 @@ export default {
       display: inline-block;
     }
     .card{
-      width:200px;
+      width:300px;
      
     }
+    
    .img{
      height:300px;
    }
