@@ -64,7 +64,7 @@
         </div> 
         <div class="card-content">
           <span class="card-title">{{product.name}}</span>
-          <p>{{product.name.length}}</p>
+          
         
           <p>Производитель:{{product.manufacturer}}</p>
           <p>Гарантия:{{product.guarantee}}</p>
