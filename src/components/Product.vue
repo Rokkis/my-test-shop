@@ -65,7 +65,7 @@
         
         </div> 
         <div class="card-content">
-          <h3 class="card-title">{{product.name}}</h3>
+          <h3 :class = "{smallSize:product.SmallSize}" class="card-title">{{product.name}}</h3>
           
         
         
@@ -100,12 +100,17 @@ export default {
     },
     methods:{
      add(){
+
       this.showModal = false;
       
-      this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto,seen:false});
-      
+      this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto,SmallSize:false});
+     if(this.products[this.products.length-1].name.length > 10){
+       this.products[this.products.length-1].SmallSize = true;
+       
+     }
      this.notIsActiv = true;
      this.isActiv=false;
+
      },
 
     
@@ -130,14 +135,12 @@ export default {
       margin: 50px auto;
       display: block;
     }
-    .center{
-      margin:40%;
+    .center {
+      margin-top:40%;
+      
      
     }
 
-    .center a{
-      margin-left:45%;
-    }
     button{
       width: 200px;
       margin: 0 auto;
@@ -145,6 +148,7 @@ export default {
     }
     .row{
       display: inline-block;
+      word-wrap:break-word;
     }
     .card{
       width:300px;
@@ -154,11 +158,9 @@ export default {
    .img{
      height:300px;
    }
-   .row{
-     
-     
-     
-     word-wrap:break-word;
+  
+   .smallSize{
+     font-size: 15px;
    }
     .product-item{
       
