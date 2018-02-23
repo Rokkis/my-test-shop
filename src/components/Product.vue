@@ -20,64 +20,60 @@
 
           <div class="modal-body">
             <slot name="body">
-               <form action="">
-          <label> <p>Название товара</p>
-              <input type="text" v-model="productName" maxlength="23">
+               <form action="#">
+              <label> <p>Название товара</p>
+                <input class = "modal-input" type="text" v-model="productName" maxlength="23" required>
               </label>
 
                <label><p>Производитель</p>
-              <input type="text" v-model = "productManufacturer" maxlength="30">
+              <input class = "modal-input" type="text" v-model = "productManufacturer" maxlength="30" required>
               </label>
 
                <label> <p>Гарантия(мес)</p>
-              <input type="text" v-model = "productGuarantee" maxlength="10">
+              <input class = "modal-input" type="text" v-model = "productGuarantee" maxlength="10" required>
               </label>
 
              <p>Загрузить фото товара</p>
-              <input type="text" v-model = "productPhoto">
+              <input class = "modal-input" type="text" v-model = "productPhoto" required>
               
-
+              <button class="modal-default-button" type="submit" @click= "add">Ок</button>
                </form>
             </slot>
           </div>
-
-
+            
+           <div v-bind:class="{visibleWarning: emptyField, hiddenWarning: !emptyField}" class = "modal-footer">
+            <slot name = "footer">
+                <p >Заполните все поля верно</p>
+            </slot>
+            </div>
          
               
-              <button class="modal-default-button" @click= "add">
-                OK
-              </button>
             
           
         </div>
       </div>
     </div>
     </transition>
-
+ 
     
     
-     <div class="row" v-for = "product in products">
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-image">
-          <img class = "img" :src="product.photo">
-          
-        
-        </div> 
-        <div class="card-content">
-          <h3 :class = "{smallSize:product.SmallSize}" class="card-title">{{product.name}}</h3>
-          
-        
-        
-          <p style="font-weight: bold">Производитель:</p>
-          <p>{{product.manufacturer}}</p>
-          <p style="font-weight: bold">Гарантия:</p>
-          <p >{{product.guarantee}}</p>
+     <div  class="row">
+      <div class = "col s12 m6 l4 xl3" v-for = "product in products">
+        <div :title="product.name + '\n' + product.manufacturer"  class="card hoverable" >
+          <div class="card-image">
+            <img class = "img-responsive" :src="product.photo">
+          </div> 
+         <div class="card-content">
+          <h3 class="card-title truncate">{{product.name}}</h3>
+          <p class = "card-p" style="font-weight: bold">Производитель:</p>
+          <p class = "card-p"> {{product.manufacturer}}</p>
+          <p class = "card-p" style="font-weight: bold">Гарантия:</p>
+          <p class = "card-p">{{product.guarantee}}</p>
         </div>
       </div>
     </div>
   </div>
-  
+
   </div>
   </div>
 </template>
@@ -88,6 +84,7 @@ export default {
         return{
            isActiv:true,
            notIsActiv:false,
+           emptyField:false,
             productName:"",
             productManufacturer:"",
             productGuarantee:"",
@@ -100,19 +97,26 @@ export default {
     },
     methods:{
      add(){
-
-      this.showModal = false;
-      
+       if(this.productName === '' || this.productManufacturer === '' || this.productGuarantee === '' || this.productPhoto === ''){
+        console.log('empty');
+        this.emptyField = true;
+      } else {
       this.products.push({name:this.productName,manufacturer:this.productManufacturer,guarantee:this.productGuarantee,photo:this.productPhoto});
-     if(this.products[this.products.length-1].name.length > 10){
-       this.products[this.products.length-1].SmallSize = true;
+      this.productName = '';
+      this.productManufacturer = '';
+      this.productGuarantee = '';
+      this.productPhoto = '';
+      this.showModal = false;
+      this.emptyField = false;
+      }
        
-     }
+     
      this.notIsActiv = true;
      this.isActiv=false;
 
      },
-
+     
+     
     
      
     }
@@ -120,23 +124,17 @@ export default {
 </script>
 
 <style scoped>
-    .container{
-      width:1000px;
-      margin:0 auto;
-    }
+   
     form{
-        margin:50px 0;
+        margin:50px 0 20px 0;
     }
-    input{
-        margin-bottom: 10px;
-    }
+   
     .top{
-      
       margin: 50px auto;
       display: block;
     }
     .center {
-      margin-top:40%;
+      margin-top:30%;
       
      
     }
@@ -146,32 +144,19 @@ export default {
       margin: 0 auto;
       display: block;
     }
-    .row{
-      display: inline-block;
-      word-wrap:break-word;
-    }
+    
+    
+    
     .card{
-      width:300px;
-     
+      margin:10px 10px; 
+       word-wrap:break-word;
     }
     
-   .img{
-     height:300px;
-   }
+    
   
    
-    .product-item{
-      
-      display: inline-block;
-      width:200px;
-      height:200px;
-      border: 2px solid black;
-    }
-    img{
-      width: 100px;
-      height:100px;
-    }
-    /*Стили относящиеся к всплываемому окну*/
+    
+    /*Стили относящиеся к модальному окну*/
     .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -210,10 +195,24 @@ export default {
   margin: 20px 0;
 }
 
-.modal-default-button {
- 
+.modal-body p{
+  font-size:15px;
 }
 
+input.modal-input {
+  font-size:20px;
+}
+
+.visibleWarning {
+  visibility: visible;
+}
+.hiddenWarning {
+  visibility: hidden;
+}
+.modal-footer p{
+  color:red;
+  margin: 0;
+}
 
 
 .modal-enter {
@@ -230,4 +229,36 @@ export default {
   transform: scale(1.1);
 }
 
+ /*Медиа запросы*/
+
+ @media (max-device-width:500px){
+   .row .col.s12 {
+    width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+ }
+  @media (max-device-width: 500px) {
+    .modal-body p{
+      font-size:25px;
+    }
+    
+    input.modal-input {
+      font-size:30px;
+    }
+    .card{
+      margin: 0 auto;
+      width:600px;
+      margin-bottom:50px;
+      
+    }
+    .img-responsive{
+      height: 650px;
+    }
+    .card-p{
+      font-size:25px;
+    }
+  }
+ 
 </style>
